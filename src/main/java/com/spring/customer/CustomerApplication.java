@@ -8,9 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 
 @SpringBootApplication
-@ComponentScan(basePackages=
-		@ComponentScan.Filter(type= FilterType.REGEX,
-		pattern="com\\.spring\\.customer\\..*"))
 public class CustomerApplication {
 
 	public static void main(String[] args) {

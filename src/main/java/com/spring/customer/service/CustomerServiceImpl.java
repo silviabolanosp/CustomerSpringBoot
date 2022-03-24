@@ -11,9 +11,9 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService{
 
-    private CustomerRepository repository;
+    private final CustomerRepository repository;
 
-    @Autowired
+
     public CustomerServiceImpl(CustomerRepository repository) {
         this.repository = repository;
     }

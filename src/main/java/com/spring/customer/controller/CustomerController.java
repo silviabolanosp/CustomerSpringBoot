@@ -4,12 +4,14 @@ import java.util.List;
 
 import com.spring.customer.service.CustomerService;
 import com.spring.customer.model.Customer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
 @RequestMapping("/api")
 public class CustomerController {
+
 
     private CustomerService service;
 
