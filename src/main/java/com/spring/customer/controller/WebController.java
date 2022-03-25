@@ -42,9 +42,25 @@ public class WebController {
 
         return "customer.html";
     }
+    @GetMapping("/showCreate")
+    public String createCustomer(Model model){
+
+        model.addAttribute("customer", new Customer());
+
+        return "createCustomer.html";
+    }
 
     @PostMapping("/update/{id}")
     public String updateCustomer(Model model, @ModelAttribute("customer") Customer customer){
+        customerService.save(customer);
+
+        model.addAttribute("message", "Save Successful");
+
+        return "redirect:/web/index.html";
+    }
+
+    @PostMapping("/create")
+    public String createCustomer(Model model, @ModelAttribute("customer") Customer customer){
         customerService.save(customer);
 
         model.addAttribute("message", "Save Successful");
