@@ -1,28 +1,75 @@
 <!DOCTYPE html>
 <html>
-<body>
-<h1 th:text="#{label.form.title}">form</h1>
-<form action="/" th:object="${user}" method="POST" enctype="utf8">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+    <style>
+        .password-verdict{
+            color:#000;
+        }
+    </style>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+    <title>Registration form</title>
 
-    <div>
-        <label th:text="#{label.user.username}">username</label>
-        <input type="email" th:field="*{username}"/>
-        <p th:each="error : ${#fields.errors('username')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.password}">password</label>
-        <input type="password" th:field="*{password}"/>
-        <p th:each="error : ${#fields.errors('password')}"
-           th:text="${error}">Validation error</p>
-    </div>
-    <div>
-        <label th:text="#{label.user.confirmPass}">confirm</label>
-        <input type="password" th:field="*{matchingPassword}"/>
-    </div>
-    <button type="submit" th:text="#{label.form.submit}">submit</button>
+
+    <style>
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            align-items: center;
+            padding-top: 40px;
+            padding-bottom: 40px;
+            background-color: #f5f5f5;
+        }
+
+        .form-signin {
+            width: 100%;
+            max-width: 330px;
+            padding: 15px;
+            margin: auto;
+        }
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+        .form-signin .form-control:focus {
+            z-index: 2;
+        }
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+        .error{
+            color: darkred;
+        }
+    </style>
+
+</head>
+<body class="text-center">
+
+<form class="form-signin" action="/user/registration" method="POST">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
+<!--    <p th:if="${loginError}" class="error">Wrong user or password</p>-->
+<!--    <p th:if="${accessError}" class="error">Not enough Roles</p>-->
+    <label for="username" class="sr-only">Username</label>
+    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+    <label for="password" class="sr-only">Confirm Password</label>
+    <input type="password" id="matchPassword" name="matchPassword" class="form-control" placeholder="Confirm Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
 </form>
-
-<a th:href="@{/login.html}" th:text="#{label.form.loginLink}">login</a>
 </body>
+
 </html>

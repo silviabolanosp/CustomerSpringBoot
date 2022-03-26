@@ -1,23 +1,28 @@
 package com.spring.customer.service;
 
+import com.spring.customer.dao.CustomerRepository;
 import com.spring.customer.dao.UserRepository;
 import com.spring.customer.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import com.spring.customer.exception.*;
+import org.springframework.stereotype.Service;
 
-public class UserServiceImpl {
+@Service
+public class UserServiceImpl implements UserService{
 
-    @Autowired
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    public UserServiceImpl(UserRepository repository) {
+        this.repository = repository;
+    }
 
 
     public User registerNewUserAccount(User user) throws UserAlreadyExistException, PasswordsDontMatchException {
-        if (emailExists(user.getUsername())) {
+        if (usernameExists(user.getUsername())) {
             throw new UserAlreadyExistException("There is an account with that username: "
                     + user.getUsername());
         }
 
-        if (user.getPassword().equalsIgnoreCase(user.getMatchingPassword())) {
+        if (!user.getPassword().equals(user.getMatchingPassword())) {
             throw new PasswordsDontMatchException("Passwords don't match");
         }
 
@@ -27,7 +32,7 @@ public class UserServiceImpl {
         return repository.save(user);
     }
 
-    private boolean emailExists(String username) {
+    private boolean usernameExists(String username) {
         return repository.findByUsername(username) != null;
     }
 }

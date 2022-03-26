@@ -1,7 +1,5 @@
 package com.spring.customer.annotations;
 
-import com.spring.customer.model.User;
-
 /*
 public class PasswordMatchesValidator
         implements ConstraintValidator<PasswordMatches, Object> {
@@ -11,7 +9,7 @@ public class PasswordMatchesValidator
     }
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context){
-        User user = (User) obj;
+        UserDto user = (UserDto) obj;
         return user.getPassword().equals(user.getMatchingPassword());
     }
 }

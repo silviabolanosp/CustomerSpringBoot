@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @Entity
-@Table(name="TBL_CUSTOMER")
+@Table(name="customers")
 public class Customer {
 
     @Id

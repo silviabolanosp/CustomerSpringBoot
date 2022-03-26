@@ -7,10 +7,10 @@
         <title>Insert title here</title>
     </head>
     <body>
-    <form action="addUser">
+    <form action="addUserDto">
         ID :<br />
         <input type="text" name="t1"><br />
-        User name :<br />
+        UserDto name :<br />
         <input type="text" name="t2"><br />
         <input type="submit" value="Add">
     </form>

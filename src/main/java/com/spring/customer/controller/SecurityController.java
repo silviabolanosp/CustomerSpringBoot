@@ -1,9 +1,8 @@
 package com.spring.customer.controller;
 
 import com.spring.customer.exception.PasswordsDontMatchException;
-import com.spring.customer.model.Customer;
+import com.spring.customer.exception.UserAlreadyExistException;
 import com.spring.customer.model.User;
-import com.spring.customer.service.CustomerService;
 import com.spring.customer.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -51,22 +50,20 @@ public class SecurityController {
 
 
     @PostMapping("/user/registration")
-    public ModelAndView registerUserAccount(
-            @ModelAttribute("user")  User user,
-            HttpServletRequest request,
-            Errors errors) {
-
+    public String registerUserDtoAccount(@ModelAttribute("user")  User user, HttpServletRequest request, Errors errors) {
+        user.setEnabled(true);
+        ModelAndView mav = new ModelAndView();
         try {
-            User registered = userService.registerNewUserAccount(user);
+            User registered = service.registerNewUserAccount(user);
         } catch (UserAlreadyExistException uaeEx) {
             mav.addObject("message", "An account for that username already exists.");
-            return mav;
+            //return mav;
         } catch (PasswordsDontMatchException pdmEx) {
             mav.addObject("message", "Passwords don't match.");
-            return mav;
+            //return mav;
         }
 
-        return new ModelAndView("successRegister", "user", user);
+        return "redirect:/web/index.html";
     }
 
 }

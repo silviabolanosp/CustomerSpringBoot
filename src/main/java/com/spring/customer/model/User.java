@@ -1,25 +1,31 @@
 package com.spring.customer.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+
+import java.util.Collection;
 
 import javax.persistence.*;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-
-@Table(name="user")
+@ToString
+@Entity
+@Table(name = "users")
 public class User {
 
-    @Column(name = "username")
+    @Id
     private String username;
 
-    @Column(name = "password")
     private String password;
 
-    @Column(name = "enabled")
     private boolean enabled;
 
     @Transient
     private String matchingPassword;
-}
 
+
+
+}
