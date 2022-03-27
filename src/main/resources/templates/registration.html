@@ -1,75 +1,136 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
-    <style>
-        .password-verdict{
-            color:#000;
-        }
-    </style>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
-    <title>Registration form</title>
-
-
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-        body {
-            display: -ms-flexbox;
-            display: flex;
-            -ms-flex-align: center;
-            align-items: center;
-            padding-top: 40px;
-            padding-bottom: 40px;
-            background-color: #f5f5f5;
-        }
-
-        .form-signin {
-            width: 100%;
-            max-width: 330px;
-            padding: 15px;
-            margin: auto;
-        }
-        .form-signin .form-control {
-            position: relative;
-            box-sizing: border-box;
-            height: auto;
-            padding: 10px;
-            font-size: 16px;
-        }
-        .form-signin .form-control:focus {
-            z-index: 2;
-        }
-        .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-        }
-        .error{
-            color: darkred;
-        }
-    </style>
-
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"/>
+<style>
+.password-verdict{
+color:#000;
+}
+</style>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script th:src="@{/resources/pwstrength.js}"></script>
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII"/>
+<title th:utext="#{label.form.title}">form</title>
 </head>
-<body class="text-center">
+<body>
+    <div class="container">
+        <div >
+            <h1 th:utext="#{label.form.title}">form</h1>
+            <br/>
+            <form action="/" method="POST" enctype="utf8" >
+                <div class="form-group row" >
+                    <label for="firstName" class="col-sm-3" th:utext="#{label.user.firstName}">first</label>
+                    <span class="col-sm-5"><input id="firstName" class="form-control" name="firstName" value="" required="required"/></span>
+                    <span id="firstNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                    
+                </div>
+                <div class="form-group row">
+                    <label for="lastName" class="col-sm-3" th:utext="#{label.user.lastName}">last</label>
+                    <span class="col-sm-5"><input id="lastName" class="form-control" name="lastName" value="" required="required"/></span>
+                    <span id="lastNameError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                    
+                </div>
+                <div class="form-group row">
+                    <label for="email" class="col-sm-3" th:utext="#{label.user.email}">email</label>
+                    <span class="col-sm-5"><input id="email" type="email" class="form-control" name="email" value="" required="required"/></span>
+                    <span id="emailError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                    
+                </div>
+                <div class="form-group row">
+                    <label for="password" class="col-sm-3" th:utext="#{label.user.password}">password</label>
+                    <span class="col-sm-5"><input id="password" class="form-control" name="password" value="" type="password" required="required" autocomplete="new-password"/></span>
+                    <span id="passwordError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                </div>
+                <div class="form-group row">
+                    <label for="matchPassword" class="col-sm-3" th:utext="#{label.user.confirmPass}">confirm</label>
+                    <span class="col-sm-5"><input id="matchPassword" class="form-control" name="matchingPassword" value="" type="password" required="required" autocomplete="new-password"/></span>
+                    <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
+                </div>
+                <br/>
+                <button type="submit" class="btn btn-primary" th:utext="#{label.form.submit}">submit</button>
+            </form>
+            <br/> 
+            <a th:href="@{/login.html}" th:utext="#{label.form.loginLink}">login</a>
+        </div>
+    </div>
 
-<form class="form-signin" action="/user/registration" method="POST">
-    <h1 class="h3 mb-3 font-weight-normal">Please sign up</h1>
-<!--    <p th:if="${loginError}" class="error">Wrong user or password</p>-->
-<!--    <p th:if="${accessError}" class="error">Not enough Roles</p>-->
-    <label for="username" class="sr-only">Username</label>
-    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
-    <label for="password" class="sr-only">Password</label>
-    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
-    <label for="password" class="sr-only">Confirm Password</label>
-    <input type="password" id="matchPassword" name="matchPassword" class="form-control" placeholder="Confirm Password" required>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
-</form>
+<script th:inline="javascript">
+var serverContext = [[@{/}]];
+
+$(document).ready(function () {
+	$('form').submit(function(event) {
+		register(event);
+	});
+	
+	$(":password").keyup(function(){
+		if($("#password").val() != $("#matchPassword").val()){
+	        $("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+	    }else{
+	    	$("#globalError").html("").hide();
+	    }
+	});
+	
+	options = {
+		    common: {minChar:8},
+		    ui: {
+		    	showVerdictsInsideProgressBar:true,
+		    	showErrors:true,
+		    	errorMessages:{
+		    		  wordLength: [[#{error.wordLength}]],
+		    		  wordNotEmail: [[#{error.wordNotEmail}]],
+		    		  wordSequences: [[#{error.wordSequences}]],
+		    		  wordLowercase: [[#{error.wordLowercase}]],
+		    		  wordUppercase: [[#{error.wordUppercase}]],
+		    	          wordOneNumber: [[#{error.wordOneNumber}]],
+		    		  wordOneSpecialChar: [[#{error.wordOneSpecialChar}]]
+		    		}
+		    	}
+		};
+	 $('#password').pwstrength(options);
+});
+
+function register(event){
+	event.preventDefault();
+    $(".alert").html("").hide();
+    $(".error-list").html("");
+    if($("#password").val() != $("#matchPassword").val()){
+    	$("#globalError").show().html(/*[[#{PasswordMatches.user}]]*/);
+    	return;
+    }
+    var formData= $('form').serialize();
+    $.post(serverContext + "user/registration",formData ,function(data){
+        if(data.message == "success"){
+            window.location.href = serverContext + "successRegister.html";
+        }
+        
+    })
+    .fail(function(data) {
+        if(data.responseJSON.error.indexOf("MailError") > -1)
+        {
+            window.location.href = serverContext + "emailError.html";
+        }
+        else if(data.responseJSON.error == "UserAlreadyExist"){
+            $("#emailError").show().html(data.responseJSON.message);
+        }
+        else if(data.responseJSON.error.indexOf("InternalError") > -1){
+            window.location.href = serverContext + "login?message=" + data.responseJSON.message;
+        }
+        else{
+        	var errors = $.parseJSON(data.responseJSON.message);
+            $.each( errors, function( index,item ){
+            	if (item.field){
+            		$("#"+item.field+"Error").show().append(item.defaultMessage+"<br/>");
+            	}
+            	else {
+            		$("#globalError").show().append(item.defaultMessage+"<br/>");
+            	}
+               
+            });
+        }
+    });
+}
+
+</script>
 </body>
 
 </html>

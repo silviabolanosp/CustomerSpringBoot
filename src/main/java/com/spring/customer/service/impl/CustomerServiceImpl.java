@@ -1,15 +1,15 @@
-package com.spring.customer.service;
+package com.spring.customer.service.impl;
 
-import com.spring.customer.exception.CustomerNotFoundException;
+import com.spring.customer.web.exception.CustomerNotFoundException;
 import com.spring.customer.model.Customer;
 import com.spring.customer.dao.CustomerRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.spring.customer.service.CustomerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CustomerServiceImpl implements CustomerService{
+public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
 

@@ -1,28 +1,22 @@
-package com.spring.customer.controller;
+package com.spring.customer.web.controller;
 
-import com.spring.customer.exception.PasswordsDontMatchException;
-import com.spring.customer.exception.UserAlreadyExistException;
 import com.spring.customer.model.User;
+import com.spring.customer.web.dto.UserDto;
 import com.spring.customer.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 @Controller
 public class SecurityController {
 
-    private UserService service;
-
-    public SecurityController(UserService service) {
-        this.service = service;
-    }
-
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/login.html")
     public String showLogin(){
@@ -50,18 +44,9 @@ public class SecurityController {
 
 
     @PostMapping("/user/registration")
-    public String registerUserDtoAccount(@ModelAttribute("user")  User user, HttpServletRequest request, Errors errors) {
-        user.setEnabled(true);
-        ModelAndView mav = new ModelAndView();
-        try {
-            User registered = service.registerNewUserAccount(user);
-        } catch (UserAlreadyExistException uaeEx) {
-            mav.addObject("message", "An account for that username already exists.");
-            //return mav;
-        } catch (PasswordsDontMatchException pdmEx) {
-            mav.addObject("message", "Passwords don't match.");
-            //return mav;
-        }
+    public String registerUserDtoAccount(@ModelAttribute("user")  @Valid final UserDto accountDto) {
+
+        final User registered = userService.registerNewUserAccount(accountDto);
 
         return "redirect:/web/index.html";
     }

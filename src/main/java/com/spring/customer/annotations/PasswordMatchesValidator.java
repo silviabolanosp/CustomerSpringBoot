@@ -1,16 +1,21 @@
 package com.spring.customer.annotations;
 
-/*
-public class PasswordMatchesValidator
-        implements ConstraintValidator<PasswordMatches, Object> {
+import com.spring.customer.web.dto.UserDto;
+
+import javax.validation.ConstraintValidator;
+import javax.validation.ConstraintValidatorContext;
+
+public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
 
     @Override
-    public void initialize(PasswordMatches constraintAnnotation) {
+    public void initialize(final PasswordMatches constraintAnnotation) {
+        //
     }
+
     @Override
-    public boolean isValid(Object obj, ConstraintValidatorContext context){
-        UserDto user = (UserDto) obj;
+    public boolean isValid(final Object obj, final ConstraintValidatorContext context) {
+        final UserDto user = (UserDto) obj;
         return user.getPassword().equals(user.getMatchingPassword());
     }
+
 }
-*/

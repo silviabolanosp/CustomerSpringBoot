@@ -1,4 +1,4 @@
-package com.spring.customer.controller;
+package com.spring.customer.web.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

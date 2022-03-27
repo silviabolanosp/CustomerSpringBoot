@@ -1,4 +1,4 @@
-package com.spring.customer.exception;
+package com.spring.customer.web.exception;
 
 
 

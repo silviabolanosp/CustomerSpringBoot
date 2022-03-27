@@ -1,5 +1,6 @@
-package com.spring.customer.config;
+package com.spring.customer.security;
 
+import com.spring.customer.config.AppConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class MySpringMvcDispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
