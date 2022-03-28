@@ -46,11 +46,15 @@ color:#000;
                     <span class="col-sm-5"><input id="matchPassword" class="form-control" name="matchingPassword" value="" type="password" required="required" autocomplete="new-password"/></span>
                     <span id="globalError" class="alert alert-danger col-sm-4" style="display:none"></span>
                 </div>
+                <div class="form-group row">
+                    <label for="using2FA" class="col-sm-3" th:utext="#{label.user.2fa}">Use Two Step Verification</label>
+                    <span class="col-sm-5"><input id="using2FA" type="checkbox" name="using2FA" value="true"/></span>
+                </div>
                 <br/>
                 <button type="submit" class="btn btn-primary" th:utext="#{label.form.submit}">submit</button>
             </form>
             <br/> 
-            <a th:href="@{/login.html}" th:utext="#{label.form.loginLink}">login</a>
+            <a th:href="@{/login}" th:utext="#{label.form.loginLink}">login</a>
         </div>
     </div>
 
@@ -76,13 +80,13 @@ $(document).ready(function () {
 		    	showVerdictsInsideProgressBar:true,
 		    	showErrors:true,
 		    	errorMessages:{
-		    		  wordLength: [[#{error.wordLength}]],
-		    		  wordNotEmail: [[#{error.wordNotEmail}]],
-		    		  wordSequences: [[#{error.wordSequences}]],
-		    		  wordLowercase: [[#{error.wordLowercase}]],
-		    		  wordUppercase: [[#{error.wordUppercase}]],
-		    	          wordOneNumber: [[#{error.wordOneNumber}]],
-		    		  wordOneSpecialChar: [[#{error.wordOneSpecialChar}]]
+		    		  wordLength: /*[[#{error.wordLength}]]*/,
+		    		  wordNotEmail: /*[[#{error.wordNotEmail}]]*/,
+		    		  wordSequences: /*[[#{error.wordSequences}]]*/,
+		    		  wordLowercase: /*[[#{error.wordLowercase}]]*/,
+		    		  wordUppercase: /*[[#{error.wordUppercase}]]*/,
+		    	          wordOneNumber: /*[[#{error.wordOneNumber}]]*/,
+		    		  wordOneSpecialChar: /*[[#{error.wordOneSpecialChar}]]*/
 		    		}
 		    	}
 		};
