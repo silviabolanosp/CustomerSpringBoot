@@ -3,14 +3,21 @@ package com.spring.doubleh.service;
 import com.spring.doubleh.persistence.dao.CustomerRepository;
 import com.spring.doubleh.persistence.model.Customer;
 import com.spring.doubleh.web.error.UserNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @Service
+@Transactional
 public class CustomerServiceImpl implements CustomerService {
 
     private final CustomerRepository repository;
+
+    private final Logger log = LoggerFactory.getLogger(CustomerServiceImpl.class);
 
 
     public CustomerServiceImpl(CustomerRepository repository) {
@@ -47,4 +54,10 @@ public class CustomerServiceImpl implements CustomerService {
         repository.deleteById(id);
     }
 
+
+    @Transactional(readOnly = true)
+    public Optional<Customer> findOne(Long id) {
+        log.debug("Request to get Trade : {}", id);
+        return repository.findById(id);
+    }
 }

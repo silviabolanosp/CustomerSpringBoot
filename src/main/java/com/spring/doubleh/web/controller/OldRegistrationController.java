@@ -1,6 +1,6 @@
 package com.spring.doubleh.web.controller;
 
-/*
+
 import com.spring.doubleh.persistence.model.PasswordResetToken;
 import com.spring.doubleh.persistence.model.User;
 import com.spring.doubleh.persistence.model.VerificationToken;
@@ -227,4 +227,4 @@ public class OldRegistrationController {
         return email;
     }
 }
-*/
+

@@ -34,9 +34,6 @@ public class Customer {
         this.email = email;
     }
 
-    public Customer() {
-    }
-
     public Long getId() {
         return id;
     }
